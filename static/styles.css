@@ -1,0 +1,148 @@
+/* Variabel Global */
+:root {
+    --primary-color: #007bff;
+    --primary-dark-color: #0056b3;
+    --secondary-color: #ffdd57;
+    --background-color: #f9f9f9;
+    --text-color: #333;
+    --white-color: #fff;
+    --hover-color: rgba(255, 221, 87, 0.2); /* Warna hover untuk elemen */
+}
+
+/* Gaya Umum */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: url('/static/images/bg.jpg') no-repeat center center fixed; /* Tambahkan background gambar */
+    background-size: cover; /* Memastikan gambar mencakup seluruh layar */
+    color: var(--text-color);
+}
+
+/* Overlay untuk membuat teks lebih terlihat */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Overlay gelap dengan transparansi */
+    z-index: -1;
+}
+
+/* Navbar */
+.navbar a {
+    color: var(--text-color);
+    text-decoration: none;
+    margin-left: 15px;
+    font-weight: bold;
+    transition: color 0.3s ease, background-color 0.3s ease;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+/* Tombol */
+.btn-primary {
+    background-color: var(--primary-color);
+    border: none;
+    color: var(--white-color);
+    padding: 10px 20px;
+    text-transform: uppercase;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-dark-color);
+    transform: scale(1.05);
+}
+
+/* Tabel */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 18px;
+    text-align: left;
+}
+
+table thead {
+    background-color: var(--primary-color);
+    color: var(--white-color);
+}
+
+table td, table th {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+}
+
+table tr:nth-child(even) {
+    background-color: #f3f3f3;
+}
+
+/* Grafik */
+canvas {
+    display: block;
+    margin: 0 auto;
+}
+
+/* Formulir */
+form {
+    max-width: 500px;
+    margin: 20px auto;
+    background-color: var(--white-color);
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+form input, form select, form button {
+    width: 100%;
+    margin-bottom: 15px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+form button {
+    background-color: var(--primary-color);
+    color: var(--white-color);
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.2s ease;
+}
+
+form button:hover {
+    background-color: var(--primary-dark-color);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+}
+
+.your-class-name {
+    background: none;
+    background-color: transparent;
+}
+
+/* Responsif */
+@media (max-width: 768px) {
+    .navbar {
+        flex-wrap: wrap;
+    }
+
+    form {
+        width: 90%;
+    }
+
+    table {
+        font-size: 14px;
+    }
+
+    footer {
+        font-size: 12px;
+    }
+}

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link href="{{ url_for('static', filename='/images/lk.png') }}" rel="icon">
+    <!-- Link ke Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .dashboard-container {
+            max-width: 800px;
+            margin: auto;
+            background-color: #f9f9f9;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        body {
+            background-color: #eef2f7;
+        }
+        .table-container {
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body class="container py-5">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/dashboard">APLIKASI KEUANGAN</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Keluar</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Dashboard Content -->
+    <div class="dashboard-container">
+        <h1 class="text-center mb-4">Dashboard</h1>
+        <div class="mb-4">
+            <!-- Summary -->
+            <p><strong>Total Pemasukan:</strong> {{ total_income }}</p>
+            <p><strong>Total Pengeluaran:</strong> {{ total_expense }}</p>
+            <p><strong>Keseimbangan:</strong> {{ balance }}</p>
+        </div>
+
+        <!-- Transaction Table -->
+        <div class="table-container">
+            <h2>Transaksi</h2>
+            <table class="table table-bordered table-hover">
+                <thead class="table-light">
+                    <tr>
+                        <th>Keterangan</th>
+                        <th>Jumlah</th>
+                        <th>Jenis</th>
+                        <th>Tindakan</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for transaction in transactions %}
+                    <tr>
+                        <td>{{ transaction.description }}</td>
+                        <td>{{ transaction.amount }}</td>
+                        <td>{{ transaction.type }}</td>
+                        <td>
+                            <a href="/edit/{{ transaction.id }}" class="btn btn-warning btn-sm">Rubah</a>
+                            <a href="/delete/{{ transaction.id }}" class="btn btn-danger btn-sm">Hapus</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Transactions Overview Chart -->
+        <h2 class="mt-5">Ringkasan Transaksi</h2>
+        <canvas id="transactionsChart" width="400" height="200"></canvas>
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center mt-5">
+        <p>&copy; 2024 Finance App. All rights reserved.</p>
+        <div>
+            <a href="/" class="btn btn-primary">Tambahkan Transaksi</a>
+            <a href="/authors" class="btn btn-link">Authors</a>
+        </div>
+    </footer>
+
+    <!-- Link ke Bootstrap JS dan Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Script untuk Chart -->
+    <script>
+        const totalIncome = JSON.parse('{{ total_income | tojson | safe }}');
+        const totalExpense = JSON.parse('{{ total_expense | tojson | safe }}');
+        
+        const ctx = document.getElementById('transactionsChart').getContext('2d');
+        const transactionsChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['Pemasukan', 'Pengeluaran'],
+                datasets: [{
+                    label: 'Ringkasan Transaksi',
+                    data: [totalIncome, totalExpense],
+                    backgroundColor: ['rgba(75, 192, 192, 0.2)', 'rgba(255, 99, 132, 0.2)'],
+                    borderColor: ['rgba(75, 192, 192, 1)', 'rgba(255, 99, 132, 1)'],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { position: 'top' }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

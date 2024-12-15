@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Authors</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link href="{{ url_for('static', filename='/images/lk.png') }}" rel="icon">
+    <style>
+        .author-card {
+            margin: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            background-color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            max-width: 300px; /* Lebar kartu */
+            height: 500px; /* Tinggi kartu */
+        }
+
+        .author-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .author-card img {
+            width: 100%;
+            height: 300px; /* Tinggi gambar tetap */
+            object-fit: cover; /* Pastikan gambar proporsional */
+            border-bottom: 3px solid #007bff;
+            background-color: #f9f9f9; /* Latar belakang jika gambar tidak penuh */
+        }
+
+        .author-card-body {
+            padding: 15px;
+            text-align: center;
+            flex-grow: 1; /* Mengisi ruang tersisa */
+        }
+
+        /* Grid untuk tata letak author */
+        .row {
+            display: flex;
+            justify-content: center;
+            gap: 20px; /* Jarak antar kartu */
+            flex-wrap: wrap; /* Responsif untuk layar kecil */
+        }
+
+        .col {
+            flex: 1 1 calc(25% - 40px); /* Empat kolom pada layar besar */
+            max-width: calc(25% - 40px);
+        }
+
+        @media (max-width: 1024px) {
+            .col {
+                flex: 1 1 calc(50% - 40px); /* Dua kolom pada layar medium */
+                max-width: calc(50% - 40px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .col {
+                flex: 1 1 100%; /* Satu kolom pada layar kecil */
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body class="container py-5">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">APLIKASI KEUANGAN</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/dashboard">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Keluar</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Authors Section -->
+    <h1 class="text-center mb-4">MEET OUR AUTHORS</h1>
+    <div class="container">
+        <div class="row row-cols-1 row-cols-md-2 g-4">
+            {% for author in authors %}
+            <div class="col d-flex justify-content-center">
+                <div class="author-card">
+                    <img src="{{ url_for('static', filename='images/' + author.photo) }}" alt="{{ author.name }}">
+                    <div class="author-card-body">
+                        <h5>{{ author.name }}</h5>
+                        <p>{{ author.description }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center mt-5">
+        <p>&copy; 2024 Finance App. All rights reserved.</p>
+        <!-- Update link to dashboard instead of home -->
+        <a href="{{ url_for('dashboard') }}" class="btn btn-primary">Back to Home</a>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
